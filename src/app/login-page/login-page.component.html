@@ -1,0 +1,11 @@
+<div class="container">
+  <h3>
+    تسجيل دخول الطالب
+  </h3>
+  <mat-form-field class="login-input">
+    <mat-label>رقم الطالب التسلسلي</mat-label>
+    <input type="text" matInput
+     [formControl]="studentNumber"/>
+  </mat-form-field>
+  <button (click)="onLogin()" mat-raised-button>تسجيل الدخول</button>
+</div>
