@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginPageComponent } from './login-page/login-page.component';
-import { MarketComponent } from './market/market.component';
+import { LoginPageComponent } from './containers/login-page/login-page.component';
+import { MarketComponent } from './containers/market/market.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 
@@ -18,6 +18,7 @@ import {MatCardModule} from '@angular/material/card'
 import {MatFormFieldModule} from '@angular/material/form-field'
 import {MatInputModule} from '@angular/material/input'
 import { ReactiveFormsModule } from '@angular/forms';
+import { ProductCardComponent } from './components/product-card/product-card.component';
 
 const MaterialModules=[
   MatToolbarModule,
@@ -32,7 +33,8 @@ const MaterialModules=[
     AppComponent,
     LoginPageComponent,
     MarketComponent,
-    NavBarComponent
+    NavBarComponent,
+    ProductCardComponent
   ],
   imports: [
     BrowserModule,

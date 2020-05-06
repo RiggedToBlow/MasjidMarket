@@ -1,0 +1,11 @@
+mat-card{
+  max-width:400px;
+}
+img{
+  max-width:-webkit-fill-available;
+}
+mat-card-actions{
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+}

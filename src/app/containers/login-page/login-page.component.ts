@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoginService } from '../login.service';
+import { LoginService } from '../../login.service';
 
 @Component({
   selector: 'app-login-page',
@@ -22,7 +22,7 @@ export class LoginPageComponent implements OnInit {
 
   onLogin(){
     if (this.studentNumber.value == "1234")
-      this.router.navigate(["/market"])
+      this.router.navigate(["market"])
     else
       this.login.wrongNumberMessage()
   }

@@ -1,0 +1,19 @@
+<mat-card dir="rtl">
+  <mat-card-header> </mat-card-header>
+  <mat-card-title>{{product.title}}</mat-card-title>
+  <img
+    [src]="product.image"
+    alt=""
+  />
+  <mat-card-content>
+    <h4>السعر: {{product.price}} نقطة</h4>
+    <p>{{product.description}}</p>
+  </mat-card-content>
+  <mat-card-actions>
+    <mat-form-field>
+      <mat-label>العدد</mat-label>
+      <input type="number" matInput>
+    </mat-form-field>
+    <button mat-raised-button color="primary">أضف إلى السلة</button>
+  </mat-card-actions>
+</mat-card>
