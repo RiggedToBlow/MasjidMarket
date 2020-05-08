@@ -7,16 +7,15 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ProductCardComponent implements OnInit {
 
-  @Input() product = {
-    title:"بسكليتة ظريفة كتير",
-    image:"https://image.made-in-china.com/2f0j00kpIGTRefIHcB/Compertitive-Price-Bicycle-Kids-Bike-Popular-Style.jpg",
-    price:500,
-    description:"بسكليتة يابانية اصلية بتمشي وبتركد واحيانا بتطلع عالسقف",
-  }
+  @Input() product
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onCartAddition(){
+
   }
 
 }

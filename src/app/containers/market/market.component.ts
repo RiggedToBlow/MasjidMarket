@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { CartService } from 'src/app/cart.service';
 
 @Component({
   selector: "app-market",
@@ -6,67 +7,12 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./market.component.scss"],
 })
 export class MarketComponent implements OnInit {
-  products = [
-
-    {
-      title: "بسكليتة ظريفة كتير",
-      image:
-        "https://image.made-in-china.com/2f0j00kpIGTRefIHcB/Compertitive-Price-Bicycle-Kids-Bike-Popular-Style.jpg",
-      price: 500,
-      description: "بسكليتة يابانية اصلية بتمشي وبتركد واحيانا بتطلع عالسقف",
-    },
-    {
-      title: "بسكليتة ظريفة كتير",
-      image:
-        "https://image.made-in-china.com/2f0j00kpIGTRefIHcB/Compertitive-Price-Bicycle-Kids-Bike-Popular-Style.jpg",
-      price: 500,
-      description: "بسكليتة يابانية اصلية بتمشي وبتركد واحيانا بتطلع عالسقف",
-    },
-    {
-      title: "بسكليتة ظريفة كتير",
-      image:
-        "https://image.made-in-china.com/2f0j00kpIGTRefIHcB/Compertitive-Price-Bicycle-Kids-Bike-Popular-Style.jpg",
-      price: 500,
-      description: "بسكليتة يابانية اصلية بتمشي وبتركد واحيانا بتطلع عالسقف",
-    },
-    {
-      title: "بسكليتة ظريفة كتير",
-      image:
-        "https://image.made-in-china.com/2f0j00kpIGTRefIHcB/Compertitive-Price-Bicycle-Kids-Bike-Popular-Style.jpg",
-      price: 500,
-      description: "بسكليتة يابانية اصلية بتمشي وبتركد واحيانا بتطلع عالسقف",
-    },
-    {
-      title: "بسكليتة ظريفة كتير",
-      image:
-        "https://image.made-in-china.com/2f0j00kpIGTRefIHcB/Compertitive-Price-Bicycle-Kids-Bike-Popular-Style.jpg",
-      price: 500,
-      description: "بسكليتة يابانية اصلية بتمشي وبتركد واحيانا بتطلع عالسقف",
-    },
-    {
-      title: "بسكليتة ظريفة كتير",
-      image:
-        "https://image.made-in-china.com/2f0j00kpIGTRefIHcB/Compertitive-Price-Bicycle-Kids-Bike-Popular-Style.jpg",
-      price: 500,
-      description: "بسكليتة يابانية اصلية بتمشي وبتركد واحيانا بتطلع عالسقف",
-    },
-    {
-      title: "بسكليتة ظريفة كتير",
-      image:
-        "https://image.made-in-china.com/2f0j00kpIGTRefIHcB/Compertitive-Price-Bicycle-Kids-Bike-Popular-Style.jpg",
-      price: 500,
-      description: "بسكليتة يابانية اصلية بتمشي وبتركد واحيانا بتطلع عالسقف",
-    },
-    {
-      title: "بسكليتة ظريفة كتير",
-      image:
-        "https://image.made-in-china.com/2f0j00kpIGTRefIHcB/Compertitive-Price-Bicycle-Kids-Bike-Popular-Style.jpg",
-      price: 500,
-      description: "بسكليتة يابانية اصلية بتمشي وبتركد واحيانا بتطلع عالسقف",
-    },
-  ];
-
-  constructor() {}
+  products=this.cart.products
+  constructor(private cart:CartService) {}
 
   ngOnInit() {}
+
+  onDone(){
+    this.cart.doneDialog()
+  }
 }

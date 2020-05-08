@@ -1,5 +1,13 @@
-mat-toolbar{
-  display:flex;
+mat-toolbar {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(100px,1fr));
   justify-content: center;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  text-align: center;
+}
+.cart {
+  display: flex;
   align-items: center;
 }
