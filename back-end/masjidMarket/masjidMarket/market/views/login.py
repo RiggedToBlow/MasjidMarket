@@ -1,22 +1,27 @@
+import jwt
+import json
 from django.views.generic import TemplateView
 from django.contrib.auth import authenticate
-from django.http import HttpResponseNotAllowed, JsonResponse
+from django.http import HttpResponseNotAllowed, JsonResponse, HttpResponseBadRequest
 from django.contrib.auth.models import User
 from ..authenticate import generateToken
-import jwt
 
 
 class LoginView(TemplateView):
     def post(self, request):
-        username = request.POST['username']
-        password = request.POST['password']
+        body = json.loads(request.body.decode("utf-8"))
+        username = body['username']
+        password = body['password']
 
         user = authenticate(username=username, password=password)
         if user is None:
             return HttpResponseNotAllowed()
 
         user = User.objects.get(username=username)
-        points = user.student.points
+        try:
+            points = user.student.points
+        except:
+            return HttpResponseBadRequest()
 
         token = generateToken(username)
 
