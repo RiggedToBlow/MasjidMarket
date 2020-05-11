@@ -14,7 +14,6 @@ export class LoginService {
       title:'الرقم خاطئ',
       confirmButtonText:"حسناً",
       position:"top-end"
-
     })
   }
 }
