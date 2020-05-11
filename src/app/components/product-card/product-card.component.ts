@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-product-card',
@@ -9,13 +10,23 @@ export class ProductCardComponent implements OnInit {
 
   @Input() product
 
-  constructor() { }
+  constructor(
+    private cart:CartService
+  ) { }
+
+  numberOfProducts: number
 
   ngOnInit() {
   }
 
   onCartAddition(){
-
+    if (this.numberOfProducts){
+      this.cart.selectedProducts$.next([...this.cart.selectedProducts$.getValue(), {...this.product, number:this.numberOfProducts}])
+    }
+    else{
+      this.numberOfProducts = 1
+      this.onCartAddition()
+    }
   }
 
 }

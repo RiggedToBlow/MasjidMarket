@@ -7,10 +7,9 @@ import { map } from 'rxjs/operators';
 })
 export class CartService {
 
-  totalPrice = new BehaviorSubject<number>(0)
+  totalPrice$ = new BehaviorSubject<number>(0)
 
-  constructor() { }
-  products = [
+  products$ = new BehaviorSubject([
     {
       title: "بسكليتة ظريفة كتير",
       image:
@@ -67,22 +66,10 @@ export class CartService {
       price: 500,
       description: "بسكليتة يابانية اصلية بتمشي وبتركد واحيانا بتطلع عالسقف",
     },
-  ];
+  ])
 
-  doneDialog(){
-    return from(
-      Swal.fire({
-        title: 'هل أنت متأكد',
-        text:"لقد قمت بشراء (3 بسكليتة, 2 اقلام, 4 شغلات)",
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'نعم انا متأكد',
-        cancelButtonText: 'لا'
-      })
-    ).pipe(
-      map(response=>response.value? true:false)
-    )
-  }
+  selectedProducts$ = new BehaviorSubject([])
+
+  constructor() {  }
+
 }

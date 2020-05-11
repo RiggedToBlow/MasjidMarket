@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { LoginPageComponent } from './containers/login-page/login-page.component';
 import { MarketComponent } from './containers/market/market.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 
 
 
@@ -18,8 +18,13 @@ import {MatCardModule} from '@angular/material/card'
 import {MatFormFieldModule} from '@angular/material/form-field'
 import {MatInputModule} from '@angular/material/input'
 import {MatIconModule} from '@angular/material/icon'
-import { ReactiveFormsModule } from '@angular/forms';
+import {MatDialogModule} from '@angular/material/dialog'
+import {MatTableModule} from '@angular/material/table'
+
+
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ProductCardComponent } from './components/product-card/product-card.component';
+import { CartBillDialogComponent } from './components/cart-bill-dialog/cart-bill-dialog.component';
 
 const MaterialModules=[
   MatToolbarModule,
@@ -27,7 +32,9 @@ const MaterialModules=[
   MatCardModule,
   MatFormFieldModule,
   MatInputModule,
-  MatIconModule
+  MatIconModule,
+  MatDialogModule,
+  MatTableModule
 ]
 
 @NgModule({
@@ -36,15 +43,18 @@ const MaterialModules=[
     LoginPageComponent,
     MarketComponent,
     NavBarComponent,
-    ProductCardComponent
+    ProductCardComponent,
+    CartBillDialogComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ...MaterialModules,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
+  entryComponents:[CartBillDialogComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

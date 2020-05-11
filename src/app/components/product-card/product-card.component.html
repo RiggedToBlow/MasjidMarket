@@ -12,8 +12,8 @@
   <mat-card-actions>
     <mat-form-field>
       <mat-label>العدد</mat-label>
-      <input type="number" matInput>
+      <input type="number" matInput [(ngModel)]="numberOfProducts">
     </mat-form-field>
-    <button mat-raised-button color="primary">أضف إلى السلة</button>
+    <button mat-raised-button color="primary" (click)="onCartAddition()">أضف إلى السلة</button>
   </mat-card-actions>
 </mat-card>
