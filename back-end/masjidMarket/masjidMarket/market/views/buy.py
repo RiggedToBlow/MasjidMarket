@@ -17,20 +17,20 @@ class BuyView(TemplateView):
 
         items = body["items"]
 
-        totalPrice = 0
+        totalPrice = sum(Product.objects.get(pk=item['id']).price for item in items)
+        if user.student.points < totalPrice:
+            return HttpResponseBadRequest()
+        user.student.points -= totalPrice
+
         for item in items:
             try:
                 product = Product.objects.get(pk=item['id'])
-                totalPrice += product.price
                 product.quantity -= item['quantity']
+                user.student.items.add(product.id)
                 product.save()
             except:
                 return HttpResponseBadRequest()
 
-        if user.student.points < totalPrice:
-            return HttpResponseBadRequest()
-
-        user.student.points -= totalPrice
         user.student.save()
 
         return HttpResponse(status=200)
