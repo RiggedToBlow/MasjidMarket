@@ -8,9 +8,11 @@ from ..authenticate import authenticateToken
 class ProductsView(TemplateView):
     def post(self, request):
         body = json.loads(request.body.decode("utf-8"))
-
-        token = body['token']
-        if authenticateToken(token) is None:
+        try:
+            token = body['token']
+            if authenticateToken(token) is None:
+                return HttpResponseNotAllowed()
+        except:
             return HttpResponseNotAllowed()
 
         products = list(Product.objects.all().values())
