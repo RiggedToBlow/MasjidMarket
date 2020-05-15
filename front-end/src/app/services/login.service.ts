@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import Swal from 'sweetalert2'
 import { BehaviorSubject } from 'rxjs';
 import { CanActivate, Router } from '@angular/router';
 import { map, tap } from 'rxjs/operators';
