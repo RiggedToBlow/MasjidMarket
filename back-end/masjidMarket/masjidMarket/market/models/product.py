@@ -7,7 +7,6 @@ class Product(models.Model):
 
     title = models.CharField(max_length=256, null=False)
     description = models.CharField(max_length=256, null=False)
-    quantity = models.PositiveIntegerField()
     image = models.URLField(max_length=256)
     price = models.PositiveIntegerField()
 

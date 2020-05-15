@@ -14,6 +14,5 @@ class ProductsView(TemplateView):
             return HttpResponseNotAllowed()
 
         products = list(Product.objects.all().values())
-        print(products)
 
         return JsonResponse(products, safe=False)

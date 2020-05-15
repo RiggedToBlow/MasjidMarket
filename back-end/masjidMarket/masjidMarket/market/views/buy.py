@@ -25,7 +25,6 @@ class BuyView(TemplateView):
         for item in items:
             try:
                 product = Product.objects.get(pk=item['id'])
-                product.quantity -= item['quantity']
                 user.student.items.add(product.id)
                 product.save()
             except:
