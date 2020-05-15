@@ -14,19 +14,25 @@ export class ProductCardComponent implements OnInit {
     private cart:CartService
   ) { }
 
-  numberOfProducts: number
+  quantity: number 
 
   ngOnInit() {
   }
 
   onCartAddition(){
-    if (this.numberOfProducts){
-      this.cart.selectedProducts$.next([...this.cart.selectedProducts$.getValue(), {...this.product, number:this.numberOfProducts}])
-    }
-    else{
-      this.numberOfProducts = 1
-      this.onCartAddition()
-    }
+    this.cart.selectedProducts$.next({
+      ...this.cart.selectedProducts$.getValue(),
+      [this.product.id]:{
+        ...this.product,
+        quantity: this.quantity
+      } 
+     })
   }
 
+  onPlusSign(){
+    this.quantity ? this.quantity++ : this.quantity = 1 
+  }
+  onMinusSign(){
+    this.quantity && this.quantity > 0 ? this.quantity-- :  this.quantity = 0 
+  }
 }

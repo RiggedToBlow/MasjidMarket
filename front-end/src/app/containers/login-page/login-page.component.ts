@@ -1,30 +1,37 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { LoginService } from '../../services/login.service';
+import { Component, OnInit } from "@angular/core";
+import { FormControl, Validators, FormBuilder } from "@angular/forms";
+import { Router } from "@angular/router";
+import { LoginService } from "../../services/login.service";
+import { CartService } from "src/app/services/cart.service";
 
 @Component({
-  selector: 'app-login-page',
-  templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.scss']
+  selector: "app-login-page",
+  templateUrl: "./login-page.component.html",
+  styleUrls: ["./login-page.component.scss"],
 })
 export class LoginPageComponent implements OnInit {
-
-  studentNumber = new FormControl("",Validators.minLength(4))
-
+  form = this.fb.group({
+    username:["",[Validators.required]],
+    password:["",[Validators.required]]
+  })
   constructor(
-    private router:Router,
-    private login: LoginService
-  ) { }
+    private router: Router,
+    private loginService: LoginService,
+    private cartService: CartService,
+    private fb:FormBuilder
+  ) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  onLogin() {
+    if(this.form.valid){
+      this.loginService
+        .login(this.form.value)
+        .subscribe((val: any) => {
+          this.loginService.loggedInToken.next(val.token);
+          this.cartService.userPoints$.next(val.points);
+          this.router.navigate(['market'])
+        });
+    }
   }
-
-  onLogin(){
-    if (this.studentNumber.value == "1234")
-      this.router.navigate(["market"])
-    else
-      this.login.wrongNumberMessage()
-  }
-
 }

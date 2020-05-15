@@ -17,5 +17,8 @@ h3{
 }
 
 .dialog-container{
-  height:700px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height:400px;
 }

@@ -6,10 +6,10 @@ from ..authenticate import authenticateToken
 
 
 class ProductsView(TemplateView):
-    def get(self, request):
+    def post(self, request):
         body = json.loads(request.body.decode("utf-8"))
 
-        token = body["token"]
+        token = body['token']
         if authenticateToken(token) is None:
             return HttpResponseNotAllowed()
 

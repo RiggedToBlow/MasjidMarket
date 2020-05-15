@@ -10,10 +10,14 @@
     <p>{{product.description}}</p>
   </mat-card-content>
   <mat-card-actions>
-    <mat-form-field>
-      <mat-label>العدد</mat-label>
-      <input type="number" matInput [(ngModel)]="numberOfProducts">
-    </mat-form-field>
+    <div class="number-input">
+      <mat-form-field>
+        <mat-label>العدد</mat-label>
+        <input type="number" matInput [(ngModel)]="quantity">
+      </mat-form-field>
+      <button color="primary" (click)="onPlusSign()" mat-icon-button><mat-icon>add</mat-icon></button>
+      <button color="warn" (click)="onMinusSign()" mat-icon-button><mat-icon>remove</mat-icon></button>
+    </div>
     <button mat-raised-button color="primary" (click)="onCartAddition()">أضف إلى السلة</button>
   </mat-card-actions>
 </mat-card>

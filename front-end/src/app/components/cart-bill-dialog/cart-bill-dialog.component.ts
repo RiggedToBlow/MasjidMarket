@@ -14,7 +14,10 @@ import { ProductCardComponent } from '../product-card/product-card.component';
 export class CartBillDialogComponent implements OnInit {
 
   dataSource$ = this.cart.selectedProducts$.pipe(
-    map(arr=>arr.map(product=> ({...product, total: +product.price * +product.number})))
+    map(ob=>{
+      const arr = Object.values(ob)
+      return arr.map((val:any)=>({...val, total: +val.price * +val.quantity}))
+    })
   )
   constructor(
     public dialogRef:MatDialogRef<CartBillDialogComponent>,
@@ -22,17 +25,35 @@ export class CartBillDialogComponent implements OnInit {
     private cart:CartService
   ) { }
 
-  displayedColumns: string[] = [ 'name', 'number', 'price', 'total', 'button'];
-  dataSource =[
-    {name:'بسكليتة حمرة', number:'1', price:'30', total:'30'},
-    {name:'دفتر سلك', number:'5', price:'10', total:'50'},
-    {name:'دفتر سلك', number:'5', price:'10', total:'50'},
+  displayedColumns: string[] = [ 'title', 'quantity', 'price', 'total', 'button'];
+  /* dataSource =[
+    {title:'بسكليتة حمرة', quantity:'1', price:'30', total:'30'},
+    {title:'دفتر سلك', quantity:'5', price:'10', total:'50'},
+    {title:'دفتر سلك', quantity:'5', price:'10', total:'50'},
   ]
-
+ */
   ngOnInit() {
   }
 
-  getTotal(){
-    return this.dataSource.reduce((acc,curr:any)=>acc+(+curr.total), 0)
+  getTotal(dataSource){
+    return dataSource.reduce((acc,curr:any)=>acc+(+curr.total), 0)
   }
+
+  onPlusSign(element){
+    this.cart.selectedProducts$.next({
+      ...this.cart.selectedProducts$.getValue(),
+      [element.id]:{...element, quantity:element.quantity + 1}
+    })
+  }
+  onMinusSign(element){
+    this.cart.selectedProducts$.next({
+      ...this.cart.selectedProducts$.getValue(),
+      [element.id]:{...element, quantity:element.quantity ? element.quantity - 1 : 0}
+    })
+  }
+
+  onBuy(){
+    
+  }
+  onCancel(){}
 }

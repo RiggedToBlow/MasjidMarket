@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginPageComponent } from './containers/login-page/login-page.component';
 import { MarketComponent } from './containers/market/market.component';
+import { LoginService } from './services/login.service';
 
 
 const routes: Routes = [
@@ -11,7 +12,8 @@ const routes: Routes = [
   },
   {
     path:"market",
-    component:MarketComponent
+    component:MarketComponent,
+    canActivate:[LoginService]
   }
 ];
 
