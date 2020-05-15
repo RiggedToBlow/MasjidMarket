@@ -10,7 +10,6 @@ class ProductsView(TemplateView):
         body = json.loads(request.body.decode("utf-8"))
 
         token = body['token']
-        print(token)
         if authenticateToken(token) is None:
             return HttpResponseNotAllowed()
 

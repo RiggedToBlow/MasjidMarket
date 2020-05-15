@@ -34,16 +34,18 @@ export class CartService {
     return this.http.post(`${this.baseURL}product`, { token });
   }
 
-  _buyProducts(){
-    return this.selectedProducts$.pipe(
+  buyProducts(){
+    this.selectedProducts$.pipe(
       map(ob=>Object.values(ob).map((val:any)=>({id:val.id, quantity:val.quantity}))),
-      switchMap(arr=> this.buyProducts(arr).pipe(
+      switchMap(arr=> this._buyProducts(arr).pipe(
         catchError(error=>of(this.snackBar.open(" لقد حصل خطأ ما اثناء الشراء ")))
-      ))
+      )),
+      take(1)
     )
+    .subscribe(()=>this.snackBar.open("تم الشراء بنجاح"))
   }
 
-  buyProducts(arr){
+  _buyProducts(arr){
     return this.http.post(`${this.baseURL}buy`, arr)
   }
 

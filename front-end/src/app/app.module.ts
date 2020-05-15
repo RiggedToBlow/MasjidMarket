@@ -34,6 +34,7 @@ const MaterialModules = [
   MatIconModule,
   MatDialogModule,
   MatTableModule,
+  MatSnackBarModule
 ];
 
 @NgModule({
