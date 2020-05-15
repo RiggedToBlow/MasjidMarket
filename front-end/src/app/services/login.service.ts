@@ -11,15 +11,14 @@ export class LoginService implements CanActivate {
 
   baseURL = "http://127.0.0.1:8000/"
 
-  loggedInToken = new BehaviorSubject(localStorage.getItem("token"))
-
+  loggedInToken = new BehaviorSubject(localStorage.getItem("token") || 0)
+ks
   constructor(
     private http:HttpClient,
     private router:Router
   ) { }
   canActivate(route, state){
     return this.loggedInToken.pipe(
-      tap(token=>localStorage.setItem("token",token)),
       map(val=>{
         if (val) {
           return true
