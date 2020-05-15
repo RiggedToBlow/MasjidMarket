@@ -1,8 +1,12 @@
   <mat-toolbar color="primary">
-    <div class="cart">
+    <div *ngIf="loggedIn$ | async; else emptyDiv" class="cart">
       <mat-icon>shopping_cart</mat-icon>
-      {{totalPrice$ | async}}
+      {{totalPrice$ | async}} / {{userPoints$ | async}}
     </div>
+    <ng-template #emptyDiv>
+      <div></div>
+    </ng-template>
     <h1>سوق مسجد الكنجلية الالكتروني </h1>
+    <button mat-button (click)="signOut()">تسجيل الخروج</button>
   </mat-toolbar>
 
