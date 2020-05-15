@@ -1,75 +1,50 @@
-import { Injectable } from '@angular/core';
-import Swal from 'sweetalert2'
-import { from, BehaviorSubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { BehaviorSubject, of } from "rxjs";
+import { switchMap, take, map, catchError } from "rxjs/operators";
+import { LoginService } from "./login.service";
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class CartService {
+  totalPrice$ = new BehaviorSubject<any>(0);
+  baseURL = this.loginService.baseURL
+  userPoints$ = new BehaviorSubject(0);
+  
+  products$ = new BehaviorSubject([]);
+  
+  selectedProducts$ = new BehaviorSubject({});
+  constructor(
+    private loginService: LoginService,
+     private http: HttpClient,
+     private snackBar: MatSnackBar
+    ) {}
+  
+  getProducts() {
+    this.loginService.loggedInToken
+      .pipe(
+        take(1),
+        switchMap((token) => {
+        return this._getProducts(token)}))
+      .subscribe((products: any) => this.products$.next(products));
+  }
 
-  totalPrice$ = new BehaviorSubject<number>(0)
+  _getProducts(token) {
+    return this.http.post(`${this.baseURL}product`, { token });
+  }
 
-  products$ = new BehaviorSubject([
-    {
-      title: "بسكليتة ظريفة كتير",
-      image:
-        "https://image.made-in-china.com/2f0j00kpIGTRefIHcB/Compertitive-Price-Bicycle-Kids-Bike-Popular-Style.jpg",
-      price: 500,
-      description: "بسكليتة يابانية اصلية بتمشي وبتركد واحيانا بتطلع عالسقف",
-    },
-    {
-      title: "بسكليتة ظريفة كتير",
-      image:
-        "https://image.made-in-china.com/2f0j00kpIGTRefIHcB/Compertitive-Price-Bicycle-Kids-Bike-Popular-Style.jpg",
-      price: 500,
-      description: "بسكليتة يابانية اصلية بتمشي وبتركد واحيانا بتطلع عالسقف",
-    },
-    {
-      title: "بسكليتة ظريفة كتير",
-      image:
-        "https://image.made-in-china.com/2f0j00kpIGTRefIHcB/Compertitive-Price-Bicycle-Kids-Bike-Popular-Style.jpg",
-      price: 500,
-      description: "بسكليتة يابانية اصلية بتمشي وبتركد واحيانا بتطلع عالسقف",
-    },
-    {
-      title: "بسكليتة ظريفة كتير",
-      image:
-        "https://image.made-in-china.com/2f0j00kpIGTRefIHcB/Compertitive-Price-Bicycle-Kids-Bike-Popular-Style.jpg",
-      price: 500,
-      description: "بسكليتة يابانية اصلية بتمشي وبتركد واحيانا بتطلع عالسقف",
-    },
-    {
-      title: "بسكليتة ظريفة كتير",
-      image:
-        "https://image.made-in-china.com/2f0j00kpIGTRefIHcB/Compertitive-Price-Bicycle-Kids-Bike-Popular-Style.jpg",
-      price: 500,
-      description: "بسكليتة يابانية اصلية بتمشي وبتركد واحيانا بتطلع عالسقف",
-    },
-    {
-      title: "بسكليتة ظريفة كتير",
-      image:
-        "https://image.made-in-china.com/2f0j00kpIGTRefIHcB/Compertitive-Price-Bicycle-Kids-Bike-Popular-Style.jpg",
-      price: 500,
-      description: "بسكليتة يابانية اصلية بتمشي وبتركد واحيانا بتطلع عالسقف",
-    },
-    {
-      title: "بسكليتة ظريفة كتير",
-      image:
-        "https://image.made-in-china.com/2f0j00kpIGTRefIHcB/Compertitive-Price-Bicycle-Kids-Bike-Popular-Style.jpg",
-      price: 500,
-      description: "بسكليتة يابانية اصلية بتمشي وبتركد واحيانا بتطلع عالسقف",
-    },
-    {
-      title: "بسكليتة ظريفة كتير",
-      image:
-        "https://image.made-in-china.com/2f0j00kpIGTRefIHcB/Compertitive-Price-Bicycle-Kids-Bike-Popular-Style.jpg",
-      price: 500,
-      description: "بسكليتة يابانية اصلية بتمشي وبتركد واحيانا بتطلع عالسقف",
-    },
-  ])
+  _buyProducts(){
+    return this.selectedProducts$.pipe(
+      map(ob=>Object.values(ob).map((val:any)=>({id:val.id, quantity:val.quantity}))),
+      switchMap(arr=> this.buyProducts(arr).pipe(
+        catchError(error=>of(this.snackBar.open(" لقد حصل خطأ ما اثناء الشراء ")))
+      ))
+    )
+  }
 
-  selectedProducts$ = new BehaviorSubject([])
-
-  constructor() {  }
+  buyProducts(arr){
+    return this.http.post(`${this.baseURL}buy`, arr)
+  }
 
 }

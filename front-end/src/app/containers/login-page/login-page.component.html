@@ -1,11 +1,19 @@
-<div class="container">
+<form [formGroup]="form" class="container">
   <h3>
     تسجيل دخول الطالب
   </h3>
-  <mat-form-field class="login-input">
-    <mat-label>رقم الطالب التسلسلي</mat-label>
-    <input (keyup.enter)="onLogin()" type="text" matInput
-     [formControl]="studentNumber"/>
+  <mat-form-field class="input">
+    <mat-label>اسم الحساب</mat-label>
+    <input type="text" matInput formControlName="username" />
   </mat-form-field>
-  <button (click)="onLogin()" mat-raised-button>تسجيل الدخول</button>
-</div>
+  <mat-form-field class="input">
+    <mat-label>كلمة السر</mat-label>
+    <input
+      (keyup.enter)="onLogin()"
+      type="password"
+      matInput
+      formControlName="password"
+    />
+  </mat-form-field>
+  <button color="primary" (click)="onLogin()" mat-raised-button>تسجيل الدخول</button>
+</form>
