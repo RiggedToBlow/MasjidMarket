@@ -3,6 +3,7 @@ from django.views.generic import TemplateView
 from django.http import HttpResponseNotAllowed, JsonResponse
 from ..authenticate import authenticateToken
 from ..models import Product
+from ..models import StudentProduct
 
 
 
@@ -29,10 +30,16 @@ class BuyView(TemplateView):
         user.student.points -= totalPrice
         for item in items:
             product = Product.objects.get(pk=item['id'])
-            user.student.items.add(product.id)
+            try:
+                stupro = StudentProduct.objects.get(student=user.student, product=product)
+                stupro.count += item['quantity']
+                stupro.save()
+            except:
+                StudentProduct(student=user.student,
+                            product=product,
+                            count=item['quantity']).save()
             product.save()
-
         user.student.save()
-        
+
         return JsonResponse({ "points": user.student.points,
                               "done" : True},status=200)
