@@ -69,11 +69,12 @@ export class CartBillDialogComponent implements OnInit {
   onBuy() {
     combineLatest(this.userPoints$, this.totalPrice$)
       .pipe(take(1))
-      .subscribe(([points, price]) =>
-        price <= points
-          ? this.cart.buyProducts()
-          : this.snack.open("نقاطك أقل من اللازم")
-      );
+      .subscribe(([points, price]) => {
+        if (price <= points) {
+          this.cart.buyProducts();
+          this.dialogRef.close();
+        } else this.snack.open("نقاطك أقل من اللازم");
+      });
   }
   onCancel() {
     this.dialogRef.close();

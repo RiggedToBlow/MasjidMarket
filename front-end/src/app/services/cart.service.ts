@@ -56,7 +56,10 @@ export class CartService {
         ),
         take(1)
       )
-      .subscribe(() => this.snackBar.open("تم الشراء بنجاح"));
+      .subscribe((val) => {
+        this.snackBar.open("تم الشراء بنجاح")
+        this.userPoints$.next(+this.userPoints$.getValue() - +this.totalPrice$.getValue())
+      });
   }
 
   _buyProducts(ob: { items: []; token: string }) {

@@ -28,7 +28,7 @@ ks
   }
 
   login(user){
-    return this.http.post(`${this.baseURL}login`,{...user})
+    return this.http.post(`${this.baseURL}login`,{...user}).pipe(tap(console.log))
   }
 
 }
