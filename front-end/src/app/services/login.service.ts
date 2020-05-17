@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LoginService implements CanActivate {
 
-  baseURL = "http://127.0.0.1:8000/"
+  baseURL = "./"
 
   loggedInToken = new BehaviorSubject(localStorage.getItem("token") || 0)
 ks

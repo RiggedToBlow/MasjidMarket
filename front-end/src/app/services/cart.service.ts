@@ -46,19 +46,20 @@ export class CartService {
           })),
           token,
         })),
-        tap(console.log),
-        switchMap((arr) =>
+        switchMap((arr: any) =>
           this._buyProducts(arr).pipe(
-            catchError((error) =>
-              of(this.snackBar.open(" لقد حصل خطأ ما اثناء الشراء "))
-            )
+            catchError((error) => of(" لقد حصل خطأ ما اثناء الشراء "))
           )
         ),
         take(1)
       )
       .subscribe((val) => {
-        this.snackBar.open("تم الشراء بنجاح")
-        this.userPoints$.next(+this.userPoints$.getValue() - +this.totalPrice$.getValue())
+        if (typeof val == "object") {
+          this.snackBar.open("تم الشراء بنجاح");
+          this.userPoints$.next(
+            +this.userPoints$.getValue() - +this.totalPrice$.getValue()
+          );
+        } else this.snackBar.open(val);
       });
   }
 
