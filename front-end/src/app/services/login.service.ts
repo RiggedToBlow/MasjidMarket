@@ -11,7 +11,7 @@ export class LoginService implements CanActivate {
   baseURL = "./"
 
   loggedInToken = new BehaviorSubject(localStorage.getItem("token") || 0)
-ks
+
   constructor(
     private http:HttpClient,
     private router:Router

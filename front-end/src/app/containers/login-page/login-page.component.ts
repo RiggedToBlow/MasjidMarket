@@ -13,10 +13,12 @@ import { of } from 'rxjs';
   styleUrls: ["./login-page.component.scss"],
 })
 export class LoginPageComponent implements OnInit {
+
   form = this.fb.group({
     username:["",[Validators.required]],
     password:["",[Validators.required]]
   })
+
   constructor(
     private router: Router,
     private loginService: LoginService,
