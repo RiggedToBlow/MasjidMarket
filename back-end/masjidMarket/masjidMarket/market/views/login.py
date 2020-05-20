@@ -26,5 +26,6 @@ class LoginView(View):
 
         responseObject = {  "token" : token,
                             "name"  : user.get_full_name(),
-                            "points": points}
+                            "points": points,
+                            "pages" : ceil(Product.objects.count() / 10)}
         return JsonResponse(responseObject, safe=False)
