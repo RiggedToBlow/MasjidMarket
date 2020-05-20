@@ -1,25 +1,25 @@
 import json
-from django.views.generic import TemplateView
-from django.http import HttpResponseNotAllowed, JsonResponse
+from django.views.generic import View
+from django.http import HttpResponse, JsonResponse
 from ..authenticate import authenticateToken
 from ..models import Product
 from ..models import StudentProduct
 
 
 
-class BuyView(TemplateView):
+class BuyView(View):
     def post(self, request):
         body = json.loads(request.body.decode("utf-8"))
 
         token = body.get("token")
         user = authenticateToken(token)
         if token is None or user is None:
-            return HttpResponseNotAllowed()
+            return HttpResponse(status=401)
 
 
         items = body.get("items")
         if items is None:
-            return HttpResponseBadRequest()
+            return HttpResponse(status=400)
 
 
         totalPrice = sum(Product.objects.get(pk=item['id']).price * item['quantity'] for item in items)

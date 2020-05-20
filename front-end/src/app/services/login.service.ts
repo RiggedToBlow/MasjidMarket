@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 export class LoginService implements CanActivate {
 /* TODO Replace with ./ for production */
 /* Replace with  http://127.0.0.1:8000/ for development*/
-  baseURL =  "./"
+  baseURL =  "http://127.0.0.1:8000/"
 
 
   loggedInToken = new BehaviorSubject("")
