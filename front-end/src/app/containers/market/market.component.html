@@ -2,8 +2,3 @@
 <div class="cards-container">
   <app-product-card *ngFor="let product of products$ | async" [product]="product"></app-product-card>
 </div>
-<div class="floating-action">
-  <button (click)="onDone()" mat-fab color="accent">
-  <mat-icon>done</mat-icon>
-  </button>
-</div>

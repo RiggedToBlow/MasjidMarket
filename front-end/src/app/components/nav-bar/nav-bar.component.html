@@ -1,13 +1,19 @@
-  <mat-toolbar color="primary">
-    <div *ngIf="loggedIn$ | async; else emptyDiv" class="cart">
+<mat-toolbar color="primary">
+  <div *ngIf="loggedIn$ | async; else emptyDiv" class="cart">
+    <button mat-icon-button (click)="onBuy()">
       <mat-icon>shopping_cart</mat-icon>
-      {{totalPrice$ | async}} / {{userPoints$ | async}}
-    </div>
-    <h1>سوق مسجد الكنجلية الالكتروني </h1>
-    <button mat-button (click)="signOut()" *ngIf="loggedIn$ | async; else emptyDiv">تسجيل الخروج</button>
-  </mat-toolbar>
+    </button>
+  </div>
+  <h1>سوق مسجد الكنجلية الالكتروني</h1>
+  <button
+    mat-icon-button
+    (click)="signOut()"
+    *ngIf="loggedIn$ | async; else emptyDiv"
+  >
+    <mat-icon svgIcon="logout"></mat-icon>
+  </button>
+</mat-toolbar>
 
-
-  <ng-template #emptyDiv>
-    <div></div>
-  </ng-template>
+<ng-template #emptyDiv>
+  <div></div>
+</ng-template>

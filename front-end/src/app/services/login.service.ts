@@ -7,28 +7,31 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class LoginService implements CanActivate {
+/* TODO Replace with ./ for production */
+/* Replace with  http://127.0.0.1:8000/ for development*/
+  baseURL =  "./"
 
-  baseURL = "./"
 
-  loggedInToken = new BehaviorSubject(localStorage.getItem("token") || 0)
+  loggedInToken = new BehaviorSubject("")
 
   constructor(
     private http:HttpClient,
     private router:Router
   ) { }
+
   canActivate(route, state){
     return this.loggedInToken.pipe(
       map(val=>{
         if (val) {
           return true
         }
-        return false
+        return this.router.parseUrl('')
       }),
     )
   }
 
   login(user){
-    return this.http.post(`${this.baseURL}login`,{...user}).pipe(tap(console.log))
+    return this.http.post(`${this.baseURL}login`,{...user})
   }
 
 }

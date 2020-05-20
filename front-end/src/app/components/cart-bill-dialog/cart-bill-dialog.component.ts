@@ -36,7 +36,7 @@ export class CartBillDialogComponent implements OnInit {
     "quantity",
     "price",
     "total",
-    "button",
+    /* "button", */
   ];
   /* dataSource =[
     {title:'بسكليتة حمرة', quantity:'1', price:'30', total:'30'},

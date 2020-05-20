@@ -32,9 +32,4 @@ export class MarketComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription$.unsubscribe();
   }
-
-  onDone() {
-    this.dialog.open(CartBillDialogComponent);
-    /* this.cart.doneDialog() */
-  }
 }

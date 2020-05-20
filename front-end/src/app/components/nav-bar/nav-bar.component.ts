@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CartService } from 'src/app/services/cart.service';
 import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { CartBillDialogComponent } from '../cart-bill-dialog/cart-bill-dialog.component';
 
 @Component({
   selector: 'app-nav-bar',
@@ -16,7 +18,8 @@ export class NavBarComponent implements OnInit {
   constructor(
     private cart:CartService,
     private login: LoginService,
-    private router: Router
+    private router: Router,
+    private dialog:MatDialog
     ) { }
 
   ngOnInit() {
@@ -29,5 +32,9 @@ export class NavBarComponent implements OnInit {
     localStorage.removeItem("token")
     localStorage.removeItem("points")
     this.router.navigate([''])
+  }
+
+  onBuy(){
+    this.dialog.open(CartBillDialogComponent)
   }
 }

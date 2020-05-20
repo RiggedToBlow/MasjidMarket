@@ -1,19 +1,22 @@
-<form [formGroup]="form" class="container">
-  <h3>
-    تسجيل دخول الطالب
-  </h3>
-  <mat-form-field class="input">
-    <mat-label>اسم الحساب</mat-label>
-    <input type="text" matInput formControlName="username" />
-  </mat-form-field>
-  <mat-form-field class="input">
-    <mat-label>كلمة السر</mat-label>
-    <input
-      (keyup.enter)="onLogin()"
-      type="password"
-      matInput
-      formControlName="password"
-    />
-  </mat-form-field>
-  <button color="primary" (click)="onLogin()" mat-raised-button>تسجيل الدخول</button>
-</form>
+
+<div class="container">
+  <form [formGroup]="form" class="form-container">
+    <h3>
+      تسجيل دخول الطالب
+    </h3>
+    <mat-form-field class="input">
+      <mat-label>اسم الحساب</mat-label>
+      <input type="text" matInput formControlName="username" />
+    </mat-form-field>
+    <mat-form-field class="input">
+      <mat-label>كلمة السر</mat-label>
+      <input
+        (keyup.enter)="onLogin()"
+        type="password"
+        matInput
+        formControlName="password"
+      />
+    </mat-form-field>
+    <button color="primary" (click)="onLogin()" mat-raised-button>تسجيل الدخول</button>
+  </form>
+</div>

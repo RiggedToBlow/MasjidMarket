@@ -10,7 +10,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 export class CartService {
   totalPrice$ = new BehaviorSubject<any>(0);
   baseURL = this.loginService.baseURL;
-  userPoints$ = new BehaviorSubject(localStorage.getItem("points") || 0);
+  userPoints$ = new BehaviorSubject(0);
 
   products$ = new BehaviorSubject([]);
 
