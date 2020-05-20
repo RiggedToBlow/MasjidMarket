@@ -18,7 +18,7 @@ class ProductsView(View):
 
 
         products_list = Product.objects.all()
-        paginator = Paginator(products_list, 2)
+        paginator = Paginator(products_list, 10)
         if page_num > paginator.num_pages:
             return HttpResponse(status=400)
 
