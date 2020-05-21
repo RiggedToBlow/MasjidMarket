@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.views.generic import View
 
 
-class IndexView(TemplateView):
+class IndexView(View):
     def get(self, request):
-        return render(request, 'index.html')
+        return render(request, "market/index.html")

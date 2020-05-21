@@ -1,13 +1,13 @@
-import jwt
 import json
-from django.views.generic import TemplateView
+from math import ceil
+from django.views.generic import View
 from django.contrib.auth import authenticate
 from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.models import User
 from ..authenticate import generateToken
+from ..models import Product
 
-
-class LoginView(TemplateView):
+class LoginView(View):
     def post(self, request):
         body = json.loads(request.body.decode("utf-8"))
         username = body.get('username')
@@ -15,16 +15,17 @@ class LoginView(TemplateView):
 
         user = authenticate(username=username, password=password)
         if user is None:
-            return HttpResponse(status=405)
+            return HttpResponse(status=401)
 
         try:
             points = user.student.points
         except:
-            return HttpResponse(status=400)
+            return HttpResponse(status=401)
 
         token = generateToken(username)
 
-        responseObject = {  "token": token,
-                            "name" : user.get_full_name(),
-                            "points": points}
+        responseObject = {  "token" : token,
+                            "name"  : user.get_full_name(),
+                            "points": points,
+                            "pages" : ceil(Product.objects.count() / 10)}
         return JsonResponse(responseObject, safe=False)
