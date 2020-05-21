@@ -12,9 +12,11 @@ class LoginView(View):
         body = json.loads(request.body.decode("utf-8"))
         username = body.get('username')
         password = body.get('password')
+        print(username, password)
 
         user = authenticate(username=username, password=password)
         if user is None:
+            print(user)
             return HttpResponse(status=401)
 
         try:
