@@ -40,10 +40,12 @@ export class CartService {
     combineLatest(this.selectedProducts$, this.loginService.loggedInToken)
       .pipe(
         map(([ob, token]) => ({
-          items: Object.values(ob).map((val: any) => ({
-            id: +val.id,
-            quantity: +val.quantity,
-          })),
+          items: Object.values(ob)
+            .map((val: any) => ({
+              id: +val.id,
+              quantity: +val.quantity,
+            }))
+            .filter((val) => val.quantity),
           token,
         })),
         switchMap((arr: any) =>
