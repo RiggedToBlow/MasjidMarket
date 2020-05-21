@@ -1,10 +1,10 @@
-import { Component, OnInit, Inject } from "@angular/core";
+import { Component, Inject, OnInit } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { CartService } from "src/app/services/cart.service";
-import { map, take } from "rxjs/operators";
-import { ProductCardComponent } from "../product-card/product-card.component";
-import { combineLatest } from "rxjs";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatTableDataSource } from "@angular/material/table";
+import { combineLatest } from "rxjs";
+import { map, take } from "rxjs/operators";
+import { CartService } from "src/app/services/cart.service";
 
 @Component({
   selector: "app-cart-bill-dialog",
@@ -18,11 +18,14 @@ export class CartBillDialogComponent implements OnInit {
   dataSource$ = this.cart.selectedProducts$.pipe(
     map((ob) => {
       const arr = Object.values(ob);
-      return arr.map((val: any) => ({
-        ...val,
-        total: +val.price * +val.quantity,
-      }));
-    })
+      let dataSource =  new MatTableDataSource(
+        arr.filter((val:any)=>val.quantity).map((val: any) => ({
+          ...val,
+          total: +val.price * +val.quantity,
+        }))
+      );
+      return dataSource
+    }),
   );
   constructor(
     public dialogRef: MatDialogRef<CartBillDialogComponent>,
@@ -36,18 +39,13 @@ export class CartBillDialogComponent implements OnInit {
     "quantity",
     "price",
     "total",
-    /* "button", */
+    "button",
   ];
-  /* dataSource =[
-    {title:'بسكليتة حمرة', quantity:'1', price:'30', total:'30'},
-    {title:'دفتر سلك', quantity:'5', price:'10', total:'50'},
-    {title:'دفتر سلك', quantity:'5', price:'10', total:'50'},
-  ]
- */
+
   ngOnInit() {}
 
   getTotal(dataSource) {
-    return dataSource.reduce((acc, curr: any) => acc + +curr.total, 0);
+    return dataSource.data.reduce((acc, curr: any) => acc + +curr.total, 0);
   }
 
   onPlusSign(element) {
@@ -57,8 +55,9 @@ export class CartBillDialogComponent implements OnInit {
     });
   }
   onMinusSign(element) {
+    let currentVal = this.cart.selectedProducts$.getValue();
     this.cart.selectedProducts$.next({
-      ...this.cart.selectedProducts$.getValue(),
+      ...currentVal,
       [element.id]: {
         ...element,
         quantity: element.quantity ? element.quantity - 1 : 0,
