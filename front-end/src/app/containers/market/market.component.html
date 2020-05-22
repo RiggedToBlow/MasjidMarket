@@ -1,4 +1,20 @@
-
 <div class="cards-container">
-  <app-product-card *ngFor="let product of products$ | async" [product]="product"></app-product-card>
+  <app-product-card
+    *ngFor="let product of shownProducts$ | async"
+    [product]="product"
+  ></app-product-card>
+</div>
+<div class="paginator-container">
+  <button (click)="onLastPage()" mat-icon-button>
+    <mat-icon>first_page</mat-icon>
+  </button>
+  <button (click)="onForward()" mat-icon-button>
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <button (click)="onBackward()" mat-icon-button>
+    <mat-icon>arrow_forward</mat-icon>
+  </button>
+  <button (click)="onFirstPage()" mat-icon-button>
+    <mat-icon>last_page</mat-icon>
+  </button>
 </div>

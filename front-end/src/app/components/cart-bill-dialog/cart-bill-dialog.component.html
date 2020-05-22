@@ -30,7 +30,7 @@
     <ng-container matColumnDef="total">
       <th mat-header-cell *matHeaderCellDef> المجموع </th>
       <td mat-cell *matCellDef="let element"> {{element.total}}&nbsp; &nbsp; &nbsp; </td>
-      <td mat-footer-cell *matFooterCellDef>  </td>
+      <td mat-footer-cell *matFooterCellDef> {{userPoints$ | async}} </td>
     </ng-container>
 
     <ng-container matColumnDef="button">
