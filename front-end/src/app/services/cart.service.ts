@@ -34,7 +34,7 @@ export class CartService {
   }
 
   _getProducts(token) {
-    return this.http.post(`${this.baseURL}product/1`, { token });
+    return this.http.post(`${this.baseURL}product`, { token });
   }
 
   buyProducts() {
