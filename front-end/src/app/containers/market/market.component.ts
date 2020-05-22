@@ -16,9 +16,7 @@ export class MarketComponent implements OnInit, OnDestroy {
   currentPage$ = new BehaviorSubject(1);
   products$ = this.cart.products$;
   shownProducts$ = combineLatest(this.products$, this.currentPage$).pipe(
-    tap(console.log),
     map(([products, page]) => products.slice(10 * page - 10, 10 * page)),
-    tap(console.log)
   );
   constructor(private cart: CartService, private dialog: MatDialog) {}
 
