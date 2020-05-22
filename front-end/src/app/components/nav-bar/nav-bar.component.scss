@@ -6,16 +6,12 @@ mat-toolbar {
   z-index: 1;
   text-align: center;
 }
+
 .cart {
   display: flex;
   align-items: center;
 }
 
-@media all and (max-width: 600px) {
-  h1 {
-    font-size: small;
-  }
-}
 .logo{
   height: 40px;
 }

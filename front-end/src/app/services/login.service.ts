@@ -7,9 +7,10 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class LoginService implements CanActivate {
-/* TODO Replace with ./ for production */
-/* Replace with  http://127.0.0.1:8000/ for development*/
-  baseURL =  "http://127.0.0.1:8000/"
+/* TODO Replace with ./ for production in heroku */
+/* TODO Replace with  http://127.0.0.1:8000/ for development*/
+/* TODO Replace with https://alkenjlah-market.herokuapp.com/  for production on 000webhost */
+  baseURL =  "https://alkenjlah-market.herokuapp.com/"
 
 
   loggedInToken = new BehaviorSubject("")
