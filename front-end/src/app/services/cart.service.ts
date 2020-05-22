@@ -4,12 +4,13 @@ import { BehaviorSubject, of, combineLatest } from "rxjs";
 import { switchMap, take, map, catchError, tap } from "rxjs/operators";
 import { LoginService } from "./login.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
+
 @Injectable({
   providedIn: "root",
 })
 export class CartService {
-  totalPrice$ = new BehaviorSubject<any>(0);
   baseURL = this.loginService.baseURL;
+  totalPrice$ = new BehaviorSubject<any>(0);
   userPoints$ = new BehaviorSubject(0);
 
   products$ = new BehaviorSubject([]);
@@ -61,6 +62,8 @@ export class CartService {
           this.userPoints$.next(
             +this.userPoints$.getValue() - +this.totalPrice$.getValue()
           );
+          this.totalPrice$.next(0)
+          this.selectedProducts$.next([])
         } else this.snackBar.open(val);
       });
   }
