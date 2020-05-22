@@ -1,9 +1,8 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { CartService } from "src/app/services/cart.service";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
-import { CartBillDialogComponent } from "src/app/components/cart-bill-dialog/cart-bill-dialog.component";
-import { Subscription, BehaviorSubject, combineLatest } from "rxjs";
-import { map, take, tap } from "rxjs/operators";
+import { BehaviorSubject, combineLatest, Subscription } from "rxjs";
+import { map, take } from "rxjs/operators";
+import { CartService } from "src/app/services/cart.service";
 
 @Component({
   selector: "app-market",
@@ -13,10 +12,16 @@ import { map, take, tap } from "rxjs/operators";
 export class MarketComponent implements OnInit, OnDestroy {
   selectedProducts$ = this.cart.selectedProducts$;
   subscription$ = new Subscription();
-  currentPage$ = new BehaviorSubject(1);
   products$ = this.cart.products$;
+  currentPage$ = new BehaviorSubject(1);
+  PagesArray$ = this.products$.pipe(
+    map((products) => {
+      const pagesLength = Math.ceil(products.length / 9.0);
+      return new Array(pagesLength).fill(0).map((val, index) => index + 1);
+    })
+  );
   shownProducts$ = combineLatest(this.products$, this.currentPage$).pipe(
-    map(([products, page]) => products.slice(9 * page - 9, 9 * page)),
+    map(([products, page]) => products.slice(9 * page - 9, 9 * page))
   );
   constructor(private cart: CartService, private dialog: MatDialog) {}
 
@@ -47,7 +52,7 @@ export class MarketComponent implements OnInit, OnDestroy {
         const length = products.length / 10.0;
         if (page < length) {
           this.currentPage$.next(page + 1);
-          document.body.scrollTop = 0;
+          this.scrollToTop()
         }
       });
   }
@@ -55,7 +60,7 @@ export class MarketComponent implements OnInit, OnDestroy {
     this.currentPage$.pipe(take(1)).subscribe((page) => {
       if (page > 1) {
         this.currentPage$.next(page - 1);
-        document.body.scrollTop = 0;
+        this.scrollToTop()
       }
     });
   }
@@ -64,9 +69,21 @@ export class MarketComponent implements OnInit, OnDestroy {
     this.products$.pipe(take(1)).subscribe((products) => {
       const length = products.length / 10.0;
       this.currentPage$.next(Math.ceil(length));
+      this.scrollToTop()
     });
   }
   onFirstPage() {
     this.currentPage$.next(1);
+    this.scrollToTop()
+  }
+
+  changePage(page) {
+    this.currentPage$.next(page);
+    this.scrollToTop()
+  }
+
+  scrollToTop(){
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
   }
 }
