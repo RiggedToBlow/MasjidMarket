@@ -12,11 +12,9 @@ class LoginView(View):
         body = json.loads(request.body.decode("utf-8"))
         username = body.get('username')
         password = body.get('password')
-        print(username, password)
 
         user = authenticate(username=username, password=password)
         if user is None:
-            print(user)
             return HttpResponse(status=401)
 
         try:
@@ -28,6 +26,5 @@ class LoginView(View):
 
         responseObject = {  "token" : token,
                             "name"  : user.get_full_name(),
-                            "points": points,
-                            "pages" : ceil(Product.objects.count() / 10)}
+                            "points": points}
         return JsonResponse(responseObject, safe=False)
