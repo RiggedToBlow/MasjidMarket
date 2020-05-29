@@ -49,8 +49,8 @@ export class MarketComponent implements OnInit, OnDestroy {
     combineLatest(this.products$, this.currentPage$)
       .pipe(take(1))
       .subscribe(([products, page]) => {
-        const length = products.length / 10.0;
-        if (page < length) {
+        const length = products.length / 9.0;
+        if (page <= length) {
           this.currentPage$.next(page + 1);
           this.scrollToTop()
         }
@@ -67,7 +67,7 @@ export class MarketComponent implements OnInit, OnDestroy {
 
   onLastPage() {
     this.products$.pipe(take(1)).subscribe((products) => {
-      const length = products.length / 10.0;
+      const length = products.length / 9.0;
       this.currentPage$.next(Math.ceil(length));
       this.scrollToTop()
     });
@@ -81,7 +81,7 @@ export class MarketComponent implements OnInit, OnDestroy {
     this.currentPage$.next(page);
     this.scrollToTop()
   }
-
+  // this is edit
   scrollToTop(){
     document.body.scrollTop = 0; // For Safari
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera

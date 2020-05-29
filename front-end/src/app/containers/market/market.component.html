@@ -12,9 +12,9 @@
     <mat-icon>arrow_back</mat-icon>
   </button>
   <mat-form-field>
-    <mat-select (valueChange)="changePage($event)" [value]="currentPage$ | async">
+    <mat-select dir="rtl" [panelClass]="'page'" (valueChange)="changePage($event)" [value]="currentPage$ | async">
       <mat-option *ngFor="let page of PagesArray$ | async" [value]="page">
-        {{ page }}
+          {{ page }}
       </mat-option>
     </mat-select>
   </mat-form-field>
