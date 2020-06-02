@@ -4,6 +4,6 @@ from .market import urls as marketUrls
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('hellofromtheotherside/', admin.site.urls),
     path('', include(marketUrls))
 ]

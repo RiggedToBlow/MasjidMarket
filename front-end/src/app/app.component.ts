@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
     });
     this.register.addSvgIcon(
       "logout",
-      this.DomSan.bypassSecurityTrustResourceUrl("assets/log-out.svg")
+      this.DomSan.bypassSecurityTrustResourceUrl("/static/assets/log-out.svg")
     );
   }
 }

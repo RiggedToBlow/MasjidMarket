@@ -61,28 +61,22 @@ WSGI_APPLICATION = 'masjidMarket.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
-
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'd6dkba0gevib8q',
+#         'USER': 'trsohgtqnakgxp',
+#         'PASSWORD': '0cbf05b663bcdeae20fd887a13b23043175d4bef8c774ac9a94ec0623c8a7cf4',
+#         'HOST': 'ec2-54-247-89-181.eu-west-1.compute.amazonaws.com',
+#         'PORT': '5432'
+#     }
+# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'db.sqlite3'
     }
 }
-
-
-# else:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#             'NAME': 'd42u76k1rb622h',
-#             'USER': 'irwrdrbnokdabt',
-#             'PASSWORD': 'fd2907751bafcfd62267e0ac6715a28138a8e291e4cd805b718378df660f8b98',
-#             'HOST': 'ec2-54-247-169-129.eu-west-1.compute.amazonaws.com',
-#             'PORT': '5432'
-#         }
-#     }
-
 
 
 # Password validation
@@ -121,5 +115,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# import django_heroku
-# django_heroku.settings(locals())
+import django_heroku
+django_heroku.settings(locals())

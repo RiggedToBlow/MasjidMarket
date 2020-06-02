@@ -5,13 +5,13 @@
       {{userPoints$ | async}} / {{totalPrice$ | async}}
     </button>
   </div>
-  <img src="assets/logo.png" alt="Alkanjaliah" class="logo">
+  <img src="/static/assets/logo.png" alt="Alkanjaliah" class="logo">
   <button
     mat-icon-button
     (click)="signOut()"
     *ngIf="loggedIn$ | async; else emptyDiv"
   >
-    <mat-icon svgIcon="logout"></mat-icon>
+    <mat-icon>logout</mat-icon>
   </button>
 </mat-toolbar>
 
