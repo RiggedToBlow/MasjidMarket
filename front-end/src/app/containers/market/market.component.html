@@ -1,3 +1,11 @@
+<div class="categories-container">
+  <mat-form-field>
+    <mat-select [formControl]="selectedCategory" >
+      <mat-option value="All">جميع الفئات</mat-option>
+      <mat-option *ngFor="let category of categories$ | async" [value]="category" >{{category}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
 <div class="cards-container">
   <app-product-card
     *ngFor="let product of shownProducts$ | async"

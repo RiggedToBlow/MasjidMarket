@@ -14,13 +14,23 @@ export class CartService {
   userPoints$ = new BehaviorSubject(0);
 
   products$ = new BehaviorSubject([]);
+  categorizedProducts$ = new BehaviorSubject({})
 
   selectedProducts$ = new BehaviorSubject({});
   constructor(
     private loginService: LoginService,
     private http: HttpClient,
     private snackBar: MatSnackBar
-  ) {}
+  ) {
+    this.products$.subscribe(products=>{
+      const categorized = products.reduce((acc,next)=>{
+        let category = acc[next.category]  ?acc[next.category]: []
+        category.push(next)
+        return {...acc, [next.category]:category}
+      },{})
+      this.categorizedProducts$.next(categorized)
+    })
+  }
 
   getProducts() {
     this.loginService.loggedInToken
@@ -28,7 +38,7 @@ export class CartService {
         take(1),
         switchMap((token) => {
           return this._getProducts(token);
-        })
+        }),
       )
       .subscribe((products: any) => this.products$.next(products));
   }

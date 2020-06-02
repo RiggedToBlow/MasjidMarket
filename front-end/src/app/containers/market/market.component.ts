@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { BehaviorSubject, combineLatest, Subscription } from "rxjs";
-import { map, take } from "rxjs/operators";
+import { map, take, pluck, tap } from "rxjs/operators";
 import { CartService } from "src/app/services/cart.service";
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: "app-market",
@@ -13,6 +14,9 @@ export class MarketComponent implements OnInit, OnDestroy {
   selectedProducts$ = this.cart.selectedProducts$;
   subscription$ = new Subscription();
   products$ = this.cart.products$;
+  categorized$ = this.cart.categorizedProducts$
+  categories$ = this.categorized$.pipe(map(val=>Object.keys(val)))
+  selectedCategory = new FormControl("All")
   currentPage$ = new BehaviorSubject(1);
   PagesArray$ = this.products$.pipe(
     map((products) => {
@@ -20,13 +24,27 @@ export class MarketComponent implements OnInit, OnDestroy {
       return new Array(pagesLength).fill(0).map((val, index) => index + 1);
     })
   );
-  shownProducts$ = combineLatest(this.products$, this.currentPage$).pipe(
-    map(([products, page]) => products.slice(9 * page - 9, 9 * page))
-  );
+  shownProducts$ = this.getShownProducts(this.products$)
+
   constructor(private cart: CartService, private dialog: MatDialog) {}
+
+    getShownProducts(products){
+      return combineLatest(products, this.currentPage$).pipe(
+        map(([products, page]:any) => products.slice(9 * page - 9, 9 * page)),
+      );
+    }
 
   ngOnInit() {
     this.cart.getProducts();
+    this.subscription$.add(
+      this.selectedCategory.valueChanges
+      .subscribe(category=>{
+        if (category =="All")
+          this.shownProducts$ = this.getShownProducts(this.products$)
+        else
+          this.shownProducts$ = this.getShownProducts(this.categorized$.pipe(pluck(category)))
+      })
+    )
     this.subscription$.add(
       this.selectedProducts$.subscribe((ob: any) => {
         const arr = Object.values(ob);
