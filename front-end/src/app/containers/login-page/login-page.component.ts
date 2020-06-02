@@ -38,9 +38,7 @@ export class LoginPageComponent implements OnInit {
           )
         .subscribe((val: any) => {
           this.loginService.loggedInToken.next(val.token);
-          localStorage.setItem("token",val.token)
           this.cartService.userPoints$.next(val.points);
-          localStorage.setItem("points",val.points)
           this.router.navigate(['market'])
         });
     }

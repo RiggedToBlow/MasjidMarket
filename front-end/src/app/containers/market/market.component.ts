@@ -16,18 +16,18 @@ export class MarketComponent implements OnInit, OnDestroy {
   categorized$ = this.cart.categorizedProducts$;
   categories$ = this.categorized$.pipe(map((val) => Object.keys(val)));
   selectedCategory = new FormControl("All");
+  currentPage$ = new BehaviorSubject(1);
   products$ = this.selectedCategory.valueChanges.pipe(
     startWith("All"),
     switchMap((category) =>
-    category == "All"
-    ? this.cart.products$
-    : this.categorized$.pipe(pluck(category))
+      category == "All" || !category
+        ? this.cart.products$
+        : this.categorized$.pipe(pluck(category))
     ),
-    tap(()=>this.currentPage$.next(1)),
+    tap(() => this.currentPage$.next(1))
   );
-  currentPage$ = new BehaviorSubject(1);
   PagesArray$ = this.products$.pipe(
-    map((products:any) => {
+    map((products: any) => {
       const pagesLength = Math.ceil(products.length / 9.0);
       return new Array(pagesLength).fill(0).map((val, index) => index + 1);
     })
@@ -61,7 +61,7 @@ export class MarketComponent implements OnInit, OnDestroy {
   onForward() {
     combineLatest(this.products$, this.currentPage$)
       .pipe(take(1))
-      .subscribe(([products, page]:any) => {
+      .subscribe(([products, page]: any) => {
         const length = products.length / 9.0;
         if (page <= length) {
           this.currentPage$.next(page + 1);
@@ -79,7 +79,7 @@ export class MarketComponent implements OnInit, OnDestroy {
   }
 
   onLastPage() {
-    this.products$.pipe(take(1)).subscribe((products:[]) => {
+    this.products$.pipe(take(1)).subscribe((products: []) => {
       const length = products.length / 9.0;
       this.currentPage$.next(Math.ceil(length));
       this.scrollToTop();

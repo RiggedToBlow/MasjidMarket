@@ -29,8 +29,6 @@ export class NavBarComponent implements OnInit {
     this.login.loggedInToken.next(null)
     this.cart.totalPrice$.next(null)
     this.cart.userPoints$.next(null)
-    localStorage.removeItem("token")
-    localStorage.removeItem("points")
     this.router.navigate([''])
   }
 
