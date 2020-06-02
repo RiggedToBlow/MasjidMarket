@@ -6,7 +6,7 @@ from .studentProduct import StudentProduct
 
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    points = models.PositiveIntegerField()
+    points = models.PositiveIntegerField(blank=True, default=0)
     items = models.ManyToManyField(Product, through=StudentProduct, blank=True)
 
     def __str__(self):

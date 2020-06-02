@@ -22,7 +22,8 @@ class BillView(View):
             name = item.student.user.get_full_name()
             if not dic.get(name):
                 dic[name] = []
-            dic[name].append({  "title": item.product.title,
+            dic[name].append({  "id": item.id,
+                                "title": item.product.title,
                                 "quantity": item.count})
 
         return JsonResponse(dic, safe=False)
